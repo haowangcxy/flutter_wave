@@ -1,0 +1,11 @@
+// This is a generated file; do not edit or check into version control.
+FLUTTER_ROOT=/Users/a1234/flutter_mac/flutter
+FLUTTER_APPLICATION_PATH=/Users/a1234/Desktop/study_2021/flutter/share/flutter_wave/flutter_wave/flutter_wave
+COCOAPODS_PARALLEL_CODE_SIGN=true
+FLUTTER_BUILD_DIR=build
+FLUTTER_BUILD_NAME=0.0.1
+FLUTTER_BUILD_NUMBER=0.0.1
+DART_OBFUSCATION=false
+TRACK_WIDGET_CREATION=true
+TREE_SHAKE_ICONS=false
+PACKAGE_CONFIG=.dart_tool/package_config.json
