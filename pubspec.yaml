@@ -1,10 +1,10 @@
-name: flutter_wave
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+name: wh_flutter_wave
+description: flutter audio wave.
+version: 0.0.4
+homepage: https://github.com/haowangcxy/flutter_wave
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
+  sdk: '>=2.19.4 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

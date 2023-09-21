@@ -18,7 +18,11 @@ class MainApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('flutter_wave'),
         ),
-        body: const Center(child: MyWidget()),
+        body: Center(
+            child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: MyWidget(),
+        )),
       ),
     );
   }

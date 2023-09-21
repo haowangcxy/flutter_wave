@@ -1,5 +1,3 @@
-library flutter_wave;
-
 import 'dart:async';
 import 'dart:math';
 
@@ -25,14 +23,8 @@ class LineData {
 class FlutterWave extends StatefulWidget {
   double width;
   double height;
-  double volume;
-  Color? color;
   FlutterWave(
-      {Key? key,
-      this.width = 300,
-      this.height = 70,
-      this.volume = 0,
-      this.color})
+      {Key? key, this.width = 300, this.height = 70, required double volume})
       : super(key: key);
 
   @override
@@ -45,14 +37,13 @@ const NORMAL_COLOR = Color(0xFF2f91fe);
 const DISABLE_COLOR = Color(0x802f91fe);
 
 class _FlutterWaveState extends State<FlutterWave> {
-  //.h
+  Color lineColor = Color(0xff1C84FE);
   double mLineWidth = 1;
-  double mStepWidth = 3;
+  double mStepWidth = 2;
   bool stopAnimation = false;
 
   void refreshWaverData() {}
 
-  //.m
   int mLineCount = 0;
   double mBaseWidth = 0;
   bool mInited = false;
@@ -73,11 +64,9 @@ class _FlutterWaveState extends State<FlutterWave> {
   double content = 1;
   List paintArr = [];
   int test = 5;
-  Timer? t = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget.color,
       body: Container(
         width: widget.width,
         height: widget.height,
@@ -98,26 +87,13 @@ class _FlutterWaveState extends State<FlutterWave> {
     mDenominator = pow(mLineCount, 4).toDouble();
     setupData();
 
-    // _ticker = Ticker((i) {
-    // setValue(this.soundValue);
-    // test++;
-    //   if (test > 1) {
-    //     test = 0;
-    //     setValue(Random().nextInt(30).toDouble());
-    //   drawVolume();
-    //   }
-    // });
-    // _ticker?.start();
-    start();
-  }
-
-  void start() {
-    t = Timer.periodic(Duration(milliseconds: 8), (timer) {
+    _ticker = Ticker((i) {});
+    _ticker?.start();
+    Timer.periodic(Duration(milliseconds: 8), (timer) {
       test++;
       if (test > 1) {
         test = 0;
-        // setValue(Random().nextInt(30).toDouble());
-        setValue(widget.volume);
+        setValue(Random().nextInt(30).toDouble());
         drawVolume();
       }
     });
@@ -141,9 +117,6 @@ class _FlutterWaveState extends State<FlutterWave> {
 
   void setPowerValue(double volume) {
     this.soundValue = volume;
-    // if (!this.stopAnimation && !(_ticker?.isActive ?? false)) {
-
-    // }
   }
 
   void setValue(double volume) {
@@ -183,12 +156,6 @@ class _FlutterWaveState extends State<FlutterWave> {
             (si * (getRandomValue(i - mLineCount) / mDenominator + 0.05) * 100)
                 .toInt());
         mSv.add(ret);
-      }
-    }
-    int sss = 0;
-    for (var i = 0; i < mSv.length; i++) {
-      if (mSv[i]) {
-        sss++;
       }
     }
 
@@ -295,35 +262,6 @@ class _FlutterWaveState extends State<FlutterWave> {
     setState(() {});
   }
 
-/**
-     * //随机交换位置
-    - (void)drawVolume {
-    self.levelPath = [UIBezierPath bezierPath];
-    
-    for (int i = 0; i < _mLineCount; i++) {
-        
-            dy += onceDy;
-        }
-        if (dy != 0) {
-            float lh = line.height + dy;
-            if (lh < _mMinHeight) {
-                lh = _mMinHeight;
-            }
-            line.height = lh;
-        }
-        else if (timelist.count == 0) {
-//            float lh = line.height;
-//            if (lh < _mMinHeight) {
-                line.height = _mMinHeight;
-//            }
-        }
-        [_levelPath moveToPoint:CGPointMake(line.x, line.y - line.height / 2)];
-        [_levelPath addLineToPoint:CGPointMake(line.x, line.y + line.height / 2)];
-    }
-    self.levelLayer.path = _levelPath.CGPath;
-}
-     */
-
   double getRandomValue(int key) {
     if (mHeightCaches[key] != null && mRandomCaches[key] >= 0) {
       return mRandomCaches[key];
@@ -359,8 +297,6 @@ class _FlutterWaveState extends State<FlutterWave> {
     super.dispose();
     _ticker?.stop();
     _ticker?.dispose();
-    t?.cancel();
-    t = null;
   }
 }
 
@@ -373,22 +309,13 @@ class MyPainter extends CustomPainter {
       ..isAntiAlias = true
       ..strokeWidth = 1.0
       ..style = PaintingStyle.fill
-      ..color = Color(0XFF6861DD)
+      ..color = Colors.green
       ..invertColors = false;
-    // Rect rect=Rect.fromPoints(Offset(size.width/2, 0), Offset(0.0, size.height/2));
-    // canvas.drawRect(rect, paint);
-    //  rect=Rect.fromPoints(Offset(size.width/3, 0), Offset(0.0, size.height/3));
-    // canvas.drawRect(rect, paint..color=Colors.red);
-    // rect=Rect.fromPoints(Offset(0, 0), Offset(size.width/4, size.height/4));
-    // canvas.drawRect(rect, paint..color=Colors.blue);
-    // canvas.drawPoints(pointMode, points, paint)
     for (var i = 0; i < (d?.length ?? 0); i++) {
       LineData l = d?[i];
       canvas.drawLine(Offset(l.x, l.y - l.height / 2),
           Offset(l.x, l.y + l.height / 2), paint);
     }
-    // canvas.drawLine(Offset(22 * d, 22 * d), Offset(33 * d, 44 * d), paint);
-    // canvas.drawLine(Offset(33 * d, 33 * d), Offset(55 * d, 55 * d), paint);
   }
 
   //在实际场景中正确利用此回调可以避免重绘开销，本示例我们简单的返回true
